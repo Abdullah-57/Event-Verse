@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['Attendee', 'Organizer', 'Admin', 'Vendor/Sponsor'],
+    enum: ['Attendee', 'Organizer', 'Admin', 'Sponsor'],
     required: true,
   },
 }, { timestamps: true });
@@ -33,8 +33,8 @@ userSchema.pre('save', async function (next) {
 });
 
 // Method to compare passwords
-userSchema.methods.comparePassword = async function (inputPassword) {
-  return bcrypt.compare(inputPassword, this.password);
+userSchema.methods.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.password);
 };
 
 const User = mongoose.model('User', userSchema);

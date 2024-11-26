@@ -4,6 +4,10 @@ import EventList from './components/EventList';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import DashboardAttendee from './components/DashboardAttendee';
+import DashboardOrganizer from './components/DashboardOrganizer';
+import DashboardAdmin from './components/DashboardAdmin';
+import DashboardSponsor from './components/DashboardSponsor';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,6 +29,10 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+           <Route path="/dashboard/attendee" element={<DashboardAttendee />} />
+          <Route path="/dashboard/organizer" element={<DashboardOrganizer />} />
+          <Route path="/dashboard/admin" element={<DashboardAdmin />} />
+          <Route path="/dashboard/sponsor" element={<DashboardSponsor />} />
         </Routes>
       </Router>
     </div>

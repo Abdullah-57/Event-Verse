@@ -15,13 +15,13 @@ router.post('/signup', async (req, res) => {
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
     const newUser = new User({
       name,
       email,
-      password: hashedPassword,
+      password,
       role,
     });
 
@@ -37,71 +37,37 @@ router.post('/signup', async (req, res) => {
 
 
 // Role-specific login
-// router.post('/login/:role', async (req, res) => {
-//   const { role } = req.params;
-//   const { email, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email, role });
-//     if (!user) {
-//       return res.status(400).json({ message: `Invalid email or password for ${role}` });
-//     }
-
-//     const isPasswordValid = await user.comparePassword(password);
-//     if (!isPasswordValid) {
-//       return res.status(400).json({ message: `Invalid email or password for ${role}` });
-//     }
-
-//     res.status(200).json({ message: `${role} login successful`, user });
-//   } catch (error) {
-//     console.error(`Error during ${role} login:`, error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// });
-
-
-// Role-specific login
 router.post('/login/:role', async (req, res) => {
   const { role } = req.params;
-  const { email, password } = req.body;
+    const { email, password } = req.body;
+    
+    console.log(email, password, role);
 
   try {
-    // Log incoming request parameters
-    console.log(`Login attempt - Role: ${role}, Email: ${email}, Password: ${password}`);
+      const user = await User.findOne({ email, role });
 
-    // Normalize the role to lowercase (if necessary)
-    const roleLower = role.toLowerCase();
-    const emailLower = email.trim().toLowerCase(); // Normalize email case and remove leading/trailing spaces
-
-    // Log normalized email and role
-    console.log(`Normalized Role: ${roleLower}, Normalized Email: ${emailLower}`);
-
-    // Find the user with the provided email and role
-    const user = await User.findOne({ email: emailLower, role: roleLower });
-    console.log('User found:', user);
+      console.log(user);
 
     if (!user) {
-      console.log(`No user found for email: ${emailLower} and role: ${roleLower}`);
-      return res.status(400).json({ message: `Invalid email or password for ${roleLower}` });
+      return res.status(400).json({ message: `Invalid email or password for ${role}` });
     }
 
-    // Compare the provided password with the stored hashed password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log('Password comparison result:', isPasswordValid);
+      const isPasswordValid = await user.comparePassword(password);
 
+      console.log(isPasswordValid);
+      
     if (!isPasswordValid) {
-      console.log(`Invalid password for email: ${emailLower}`);
-      return res.status(400).json({ message: `Invalid email or password for ${roleLower}` });
-    }
-
-    // If login is successful, send the response
-    res.status(200).json({ message: `${roleLower} login successful`, user: { _id: user._id, email: user.email } });
+      return res.status(400).json({ message: `Invalid email or password for ${role}` });
+      }
+      
+      if (user && (await user.comparePassword(password))) {
+          res.status(200).json({ message: `${role} login successful`, user });
+      };
   } catch (error) {
-    console.error('Error during login process:', error);
+    console.error(`Error during ${role} login:`, error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
 
 
 export default router;

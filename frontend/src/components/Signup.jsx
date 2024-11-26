@@ -72,7 +72,7 @@ const Signup = () => {
           <option value="Attendee">Attendee</option>
           <option value="Organizer">Organizer</option>
           <option value="Admin">Admin</option>
-          <option value="Vendor/Sponsor">Vendor/Sponsor</option>
+          <option value="Sponsor">Vendor/Sponsor</option>
         </select>
         <button type="submit">Signup</button>
       </form>
