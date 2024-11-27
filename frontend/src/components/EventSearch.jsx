@@ -27,13 +27,25 @@ const EventSearch = () => {
   };
 
   const bookEvent = async (eventId) => {
-    try {
-      const tickets = prompt('Enter the number of tickets you want to book:');
+      try {
+        
+           const user = JSON.parse(localStorage.getItem('user')); // Get the user data from localStorage
+            if (!user || !user.email) {
+            throw new Error('User email not found. Please log in.');
+            }
+
+            const attendeeEmail = user.email; // Extract attendee email from user data
+          const tickets = prompt('Enter the number of tickets you want to book:');
+          
+           if (isNaN(tickets) || tickets <= 0) {
+      throw new Error('Invalid number of tickets');
+    }
+
       
       const response = await fetch('http://localhost:5000/api/events/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, tickets: parseInt(tickets, 10) }),
+        body: JSON.stringify({ eventId, tickets: parseInt(tickets, 10), attendeeEmail }),
       });
 
       if (!response.ok) {

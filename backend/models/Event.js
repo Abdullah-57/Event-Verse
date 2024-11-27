@@ -6,6 +6,7 @@ const eventSchema = new mongoose.Schema({
   location: { type: String, required: true },
   type: { type: String, required: true },
   availableTickets: { type: Number, required: true },
+  attendees: { type: [String], default: [] } // Array of email addresses of attendees
 });
 
 const Event = mongoose.model('Event', eventSchema);

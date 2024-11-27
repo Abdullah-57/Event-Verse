@@ -9,6 +9,7 @@ import DashboardOrganizer from './components/DashboardOrganizer';
 import DashboardAdmin from './components/DashboardAdmin';
 import DashboardSponsor from './components/DashboardSponsor';
 import Preferences from './components/Preferences';
+import EventDashboard from './components/EventDashboard'; // Import the new component
 
 
 const Home = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/attendee" element={<DashboardAttendee />} />
           <Route path="/attendee/event-search" element={<EventSearch />} />
+          <Route path="/attendee/event-dashboard" element={<EventDashboard />} />;
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/dashboard/organizer" element={<DashboardOrganizer />} />
           <Route path="/organizer/create-event" element={<EventCreation />} />

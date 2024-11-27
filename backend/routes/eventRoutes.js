@@ -25,7 +25,7 @@ router.get('/search', async (req, res) => {
 // Book tickets for an event
 router.post('/book', async (req, res) => {
   try {
-    const { eventId, tickets } = req.body;
+    const { eventId, tickets, attendeeEmail } = req.body;
 
     const event = await Event.findById(eventId);
 
@@ -37,7 +37,18 @@ router.post('/book', async (req, res) => {
       return res.status(400).json({ message: 'Not enough tickets available' });
     }
 
+    // Ensure attendees is always an array
+    if (!Array.isArray(event.attendees)) {
+      event.attendees = [];
+    }
+
+    // Check if attendee is already registered
+    if (event.attendees.includes(attendeeEmail)) {
+      return res.status(400).json({ message: 'You are already registered for this event' });
+    }
+
     event.availableTickets -= tickets;
+     event.attendees.push(attendeeEmail); // Add the attendee email to the event's attendee list
     await event.save();
 
     res.status(200).json({ message: 'Tickets booked successfully', event });
@@ -93,6 +104,22 @@ router.get('/organizer/:email', async (req, res) => {
     res.status(200).json(events);
   } catch (error) {
     console.error('Error fetching organizer events:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+// Fetch registered events for an attendee
+router.get('/registered-events/:email', async (req, res) => {
+  try {
+    const attendeeEmail = req.params.email;
+
+    // Fetch events where the attendee is registered
+    const registeredEvents = await Event.find({ attendees: attendeeEmail });
+
+    res.status(200).json({ registeredEvents });
+  } catch (error) {
+    console.error('Error fetching registered events:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

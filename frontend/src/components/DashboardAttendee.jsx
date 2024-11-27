@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import EventSearch from './EventSearch';
+import EventDashboard from './EventDashboard';
 
 const DashboardAttendee = () => {
+   const [activeSection, setActiveSection] = useState('dashboard'); // Track the active section
   const [showEventSearch, setShowEventSearch] = useState(false);
   const [preferences, setPreferences] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,36 +42,56 @@ const DashboardAttendee = () => {
     fetchPreferences();
   }, []);
 
+
+
+    // Render content based on the active section
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'search':
+        return <EventSearch />;
+      case 'events':
+        return <EventDashboard />;
+      default:
+        return (
+          <>
+            {loading ? (
+              <p>Loading preferences...</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : (
+              <div>
+                <h3>Your Preferences</h3>
+                {preferences.length > 0 ? (
+                  <ul>
+                    {preferences.map((preference, index) => (
+                      <li key={index}>{preference}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>You have not set any preferences yet.</p>
+                )}
+              </div>
+            )}
+            <p>Dashboard content here...</p>
+          </>
+        );
+    }
+  };
+
   return (
     <div>
       <h2>Welcome, {user.name}</h2>
       <p>You're logged in as an Attendee!</p>
 
-      {loading ? (
-        <p>Loading preferences...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <div>
-          <h3>Your Preferences</h3>
-          {preferences.length > 0 ? (
-            <ul>
-              {preferences.map((preference, index) => (
-                <li key={index}>{preference}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>You have not set any preferences yet.</p>
-          )}
-        </div>
-      )}
 
+      <nav>
+        <button onClick={() => setActiveSection('dashboard')}>Dashboard</button>
+        <button onClick={() => setActiveSection('search')}>Search Events</button>
+        <button onClick={() => setActiveSection('events')}>Registered Events</button>
+      </nav>
 
-      <button onClick={() => setShowEventSearch(!showEventSearch)}>
-        {showEventSearch ? 'Back to Dashboard' : 'Search Events'}
-      </button>
-
-      {showEventSearch ? <EventSearch /> : <p>Dashboard content here...</p>}
+      <div>{renderContent()}</div>
+    
     </div>
   );
 };
