@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import EventSearch from './EventSearch';
 
 const DashboardAttendee = () => {
+  const [showEventSearch, setShowEventSearch] = useState(false);
   const [preferences, setPreferences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -61,6 +63,13 @@ const DashboardAttendee = () => {
           )}
         </div>
       )}
+
+
+      <button onClick={() => setShowEventSearch(!showEventSearch)}>
+        {showEventSearch ? 'Back to Dashboard' : 'Search Events'}
+      </button>
+
+      {showEventSearch ? <EventSearch /> : <p>Dashboard content here...</p>}
     </div>
   );
 };

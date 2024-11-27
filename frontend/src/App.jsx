@@ -1,6 +1,6 @@
 import React from 'react';
-import AddEvent from './components/AddEvent';
-import EventList from './components/EventList';
+import EventSearch from './components/EventSearch';
+import EventCreation from './components/EventCreation'; 
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -32,8 +32,10 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/attendee" element={<DashboardAttendee />} />
+          <Route path="/attendee/event-search" element={<EventSearch />} />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/dashboard/organizer" element={<DashboardOrganizer />} />
+          <Route path="/organizer/create-event" element={<EventCreation />} />
           <Route path="/dashboard/admin" element={<DashboardAdmin />} />
           <Route path="/dashboard/sponsor" element={<DashboardSponsor />} />
         </Routes>

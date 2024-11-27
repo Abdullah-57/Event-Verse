@@ -15,8 +15,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/events', eventRoutes);
 
 // Root route
 app.get('/', (req, res) => {
