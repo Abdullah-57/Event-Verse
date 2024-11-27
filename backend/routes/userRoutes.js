@@ -35,6 +35,44 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+router.get('/preferences', async (req, res) => {
+  try {
+    const { email } = req.query; // Use query parameters for GET requests
+
+    const user = await User.findOne({ email, role: 'Attendee' });
+    if (!user) {
+      return res.status(404).json({ message: 'Attendee not found' });
+    }
+
+    res.status(200).json({ preferences: user.preferences });
+  } catch (error) {
+    console.error('Error fetching preferences:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+// userRoutes.js
+router.put('/preferences', async (req, res) => {
+  try {
+    const { email, preferences } = req.body;
+
+    const user = await User.findOne({ email, role: 'Attendee' });
+    if (!user) {
+      return res.status(404).json({ message: 'Attendee not found' });
+    }
+
+    user.preferences = preferences;
+    await user.save();
+
+    res.status(200).json({ message: 'Preferences saved successfully', preferences: user.preferences });
+  } catch (error) {
+    console.error('Error saving preferences:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 
 // Role-specific login
 router.post('/login/:role', async (req, res) => {

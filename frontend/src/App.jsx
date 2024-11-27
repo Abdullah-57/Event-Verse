@@ -8,6 +8,8 @@ import DashboardAttendee from './components/DashboardAttendee';
 import DashboardOrganizer from './components/DashboardOrganizer';
 import DashboardAdmin from './components/DashboardAdmin';
 import DashboardSponsor from './components/DashboardSponsor';
+import Preferences from './components/Preferences';
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,7 +31,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-           <Route path="/dashboard/attendee" element={<DashboardAttendee />} />
+          <Route path="/dashboard/attendee" element={<DashboardAttendee />} />
+          <Route path="/preferences" element={<Preferences />} />
           <Route path="/dashboard/organizer" element={<DashboardOrganizer />} />
           <Route path="/dashboard/admin" element={<DashboardAdmin />} />
           <Route path="/dashboard/sponsor" element={<DashboardSponsor />} />

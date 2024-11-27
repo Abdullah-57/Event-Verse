@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     enum: ['Attendee', 'Organizer', 'Admin', 'Sponsor'],
     required: true,
   },
+  preferences: {
+      type: [String], // List of preferences
+      default: [],
+    },
 }, { timestamps: true });
 
 // Password hashing middleware
