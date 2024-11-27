@@ -1,6 +1,11 @@
 import express from 'express';
 import Event from '../models/Event.js';
 import User from '../models/User.js'; // Ensure User model is imported
+import Stripe from 'stripe';
+
+const stripe = Stripe('sk_test_51QPnXdJyiSSWZbn6eBB6RtOKnFmmuFpsn47p42om9ZmIxz63fJ1iWTrwPF9gsy0cpor7cqZsBbplNjvOnEHCpXzV006Alo1R5W');
+
+
 
 const router = express.Router();
 
@@ -22,6 +27,7 @@ router.get('/search', async (req, res) => {
   }
 });
 
+
 // Book tickets for an event
 router.post('/book', async (req, res) => {
   try {
@@ -37,6 +43,9 @@ router.post('/book', async (req, res) => {
       return res.status(400).json({ message: 'Not enough tickets available' });
     }
 
+    // Calculate the total amount (in cents) for the selected number of tickets
+    const totalAmount = event.amount * tickets;
+
     // Ensure attendees is always an array
     if (!Array.isArray(event.attendees)) {
       event.attendees = [];
@@ -47,11 +56,31 @@ router.post('/book', async (req, res) => {
       return res.status(400).json({ message: 'You are already registered for this event' });
     }
 
+      // Add the attendee to the event's list
+    event.attendees.push(attendeeEmail);
+
+    // Subtract the number of booked tickets from availableTickets
     event.availableTickets -= tickets;
-     event.attendees.push(attendeeEmail); // Add the attendee email to the event's attendee list
+
+    // Save the updated event
     await event.save();
 
-    res.status(200).json({ message: 'Tickets booked successfully', event });
+    // Create a payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: totalAmount,
+      currency: 'usd',
+      description: `Booking ${tickets} tickets for ${event.name}`,
+      receipt_email: attendeeEmail,
+    });
+
+    // Respond with the client secret from the payment intent
+    res.status(200).json({ 
+      clientSecret: paymentIntent.client_secret,
+      eventId,
+      tickets,
+      attendeeEmail,
+      totalAmount 
+    });
   } catch (error) {
     console.error('Error booking tickets:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -62,7 +91,7 @@ router.post('/book', async (req, res) => {
 // Create a new event (Organizer only)
 router.post('/create', async (req, res) => {
   try {
-    const { name, date, location, type, availableTickets } = req.body;
+    const { name, date, location, type, availableTickets, amount } = req.body;
 
     // Verify that the user is an Organizer
     const organizer = await User.findOne({ role: 'Organizer' });
@@ -79,6 +108,7 @@ router.post('/create', async (req, res) => {
       location,
       type,
       availableTickets,
+      amount,
     });
 
     await event.save();
@@ -123,9 +153,6 @@ router.get('/registered-events/:email', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
-
-
 
 
 export default router;

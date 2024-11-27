@@ -13,7 +13,7 @@ const EventDashboard = () => {
         const response = await axios.get(
           `http://localhost:5000/api/events/registered-events/${user.email}`
         );
-        setEvents(response.data.registeredEvents);
+        setEvents(response.data.registeredEvents); // Set the user's registered events
         setLoading(false);
       } catch (err) {
         console.error('Error fetching registered events:', err);
@@ -54,3 +54,4 @@ const EventDashboard = () => {
 };
 
 export default EventDashboard;
+

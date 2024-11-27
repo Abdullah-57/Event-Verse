@@ -7,6 +7,7 @@ const EventCreation = ({ organizerEmail }) => {
     location: '',
     type: '',
     availableTickets: 0,
+     amount: 0, // Add amount field
   });
 
   const handleChange = (e) => {
@@ -62,6 +63,17 @@ const EventCreation = ({ organizerEmail }) => {
           value={formData.availableTickets}
           onChange={handleChange}
           required
+        />
+      </label>
+      <label>
+        Amount per Ticket (in cents):
+        <input
+          type="number"
+          name="amount"
+          value={formData.amount}
+          onChange={handleChange}
+          required
+          min="0"
         />
       </label>
       <button type="submit">Create Event</button>
