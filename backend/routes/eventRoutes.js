@@ -2,12 +2,72 @@ import express from 'express';
 import Event from '../models/Event.js';
 import User from '../models/User.js'; // Ensure User model is imported
 import Stripe from 'stripe';
+import PDFDocument from 'pdfkit';
 
 const stripe = Stripe('sk_test_51QPnXdJyiSSWZbn6eBB6RtOKnFmmuFpsn47p42om9ZmIxz63fJ1iWTrwPF9gsy0cpor7cqZsBbplNjvOnEHCpXzV006Alo1R5W');
 
 
-
 const router = express.Router();
+
+
+
+// Route: Download E-Ticket
+router.post('/download-ticket', async (req, res) => {
+  const { eventId, attendeeEmail } = req.body;
+
+  try {
+    // Validate input
+    if (!eventId || !attendeeEmail) {
+      return res.status(400).json({ message: 'Event ID and attendee email are required.' });
+    }
+
+    // Find the event
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found.' });
+    }
+
+    // Check if the attendee is registered
+    if (!event.attendees.includes(attendeeEmail)) {
+      return res.status(404).json({ message: 'No booking found for the provided email.' });
+    }
+
+    // Generate PDF E-Ticket
+    const doc = new PDFDocument();
+    const chunks = [];
+    doc.on('data', (chunk) => chunks.push(chunk));
+    doc.on('end', () => {
+      const pdfBuffer = Buffer.concat(chunks);
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="E-Ticket-${eventId}.pdf"`,
+      });
+      res.send(pdfBuffer);
+    });
+
+    // Add E-Ticket content
+    doc.fontSize(20).text('E-Ticket', { align: 'center' });
+    doc.moveDown();
+    doc.fontSize(14).text(`Event Name: ${event.name}`);
+    doc.text(`Date: ${event.date.toDateString()}`);
+    doc.text(`Location: ${event.location}`);
+    doc.text(`Type: ${event.type}`);
+    doc.text(`Ticket Price: $${(event.amount / 100).toFixed(2)}`);
+    doc.moveDown();
+    doc.text(`Attendee: ${attendeeEmail}`);
+    doc.moveDown();
+    doc.text('Thank you for booking with us!');
+    doc.end();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while generating the E-Ticket.' });
+  }
+});
+
+
+
+
+
 
 // Fetch events with optional filters (date, location, type)
 router.get('/search', async (req, res) => {
