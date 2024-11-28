@@ -169,6 +169,9 @@ router.post('/create', async (req, res) => {
       type,
       availableTickets,
       amount,
+      createdBy: organizer._id,
+      organizerName: organizer.name,
+      isEnded: false
     });
 
     await event.save();
@@ -211,6 +214,47 @@ router.get('/registered-events/:email', async (req, res) => {
   } catch (error) {
     console.error('Error fetching registered events:', error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+// Route to fetch all events
+router.get('/all-events', async (req, res) => {
+  try {
+    const events = await Event.find({});
+    res.status(200).json(events);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch events.' });
+  }
+});
+
+// Route to end an event
+router.put('/end-event/:id', async (req, res) => {
+  const { id } = req.params;
+  const { organizerId } = req.body;
+
+  try {
+    // Find the event
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found.' });
+    }
+
+    // Check if the organizer is the creator of the event
+    if (event.createdBy.toString() !== organizerId) {
+      return res.status(403).json({ message: 'You are not authorized to end this event.' });
+    }
+
+    // Mark the event as ended
+    event.isEnded = true;
+    await event.save();
+
+    res.status(200).json({ message: 'Event ended successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to end the event.' });
   }
 });
 

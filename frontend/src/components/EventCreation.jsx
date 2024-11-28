@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const EventCreation = ({ organizerEmail }) => {
+const EventCreation = ({ organizerId }) => {
   const [formData, setFormData] = useState({
     name: '',
     date: '',
@@ -21,7 +21,7 @@ const EventCreation = ({ organizerEmail }) => {
       const response = await fetch('http://localhost:5000/api/events/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, organizerEmail }),
+        body: JSON.stringify({ ...formData, organizerId }),
       });
 
       const data = await response.json();
