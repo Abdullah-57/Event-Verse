@@ -4,7 +4,7 @@ import cors from 'cors';
 import connectDB from './config/database.js';
 import eventRoutes from './routes/eventRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-
+// hi i am faizan
 dotenv.config();
 connectDB();
 
