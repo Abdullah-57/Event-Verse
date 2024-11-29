@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Attendee');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("Attendee");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       console.log(email, password, role);
-      const response = await axios.post(`http://localhost:5000/api/users/login/${role}`, { email, password });
+      const response = await axios.post(
+        `http://localhost:5000/api/users/login/${role}`,
+        { email, password }
+      );
       setMessage(response.data.message);
 
       // Assuming the response contains user data (including role)
       const user = response.data.user;
-      
+      console.log(user);
+
       // Save user data to localStorage (or context) for later use
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(user));
 
       // Navigate to the appropriate dashboard based on role
-      if (user.role === 'Attendee') {
-        navigate('/dashboard/attendee');
-      } else if (user.role === 'Organizer') {
-        navigate('/dashboard/organizer');
-      } else if (user.role === 'Admin') {
-        navigate('/dashboard/admin');
-      } else if (user.role === 'Sponsor') {
-        navigate('/dashboard/sponsor');
+      if (user.role === "Attendee") {
+        navigate("/dashboard/attendee");
+      } else if (user.role === "Organizer") {
+        navigate("/dashboard/organizer");
+      } else if (user.role === "Admin") {
+        navigate("/dashboard/admin");
+      } else if (user.role === "Sponsor") {
+        navigate("/dashboard/sponsor");
       }
     } catch (error) {
-      setMessage(error.response?.data?.message || 'An error occurred');
+      setMessage(error.response?.data?.message || "An error occurred");
     }
   };
 
