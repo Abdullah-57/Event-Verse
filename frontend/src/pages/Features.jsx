@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const OrganizerDashboard = () => {
+const FeaturesPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
       {/* Navbar */}
@@ -13,44 +14,44 @@ const OrganizerDashboard = () => {
           </h1>
           <div className="hidden md:flex gap-6 text-lg">
             <NavLink
-              to="/dashboard"
+              to="/"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Dashboard
+              Home
             </NavLink>
             <NavLink
-              to="/organizer/create-event"
+              to="/features"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Create Event
+              Features
             </NavLink>
             <NavLink
-              to="/profile"
+              to="/about"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Profile
+              About
             </NavLink>
             <NavLink
-              to="/logout"
+              to="/contact"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Logout
+              Contact
             </NavLink>
           </div>
           {/* Hamburger Menu */}
@@ -78,12 +79,11 @@ const OrganizerDashboard = () => {
             </svg>
           </button>
         </div>
-        {/* Dropdown Menu for Mobile */}
         {isMenuOpen && (
           <ul className="md:hidden bg-gray-700 text-white text-lg">
             <li className="border-b border-gray-600">
               <NavLink
-                to="/dashboard"
+                to="/"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -91,12 +91,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Dashboard
+                Home
               </NavLink>
             </li>
             <li className="border-b border-gray-600">
               <NavLink
-                to="/create-event"
+                to="/features"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -104,12 +104,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Create Event
+                Features
               </NavLink>
             </li>
             <li className="border-b border-gray-600">
               <NavLink
-                to="/profile"
+                to="/about"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -117,12 +117,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Profile
+                About
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/logout"
+                to="/contact"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -130,7 +130,7 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Logout
+                Contact
               </NavLink>
             </li>
           </ul>
@@ -139,61 +139,94 @@ const OrganizerDashboard = () => {
 
       {/* Header */}
       <header className="text-center py-20">
-        <h2 className="text-5xl font-extrabold mb-6 animate-bounce">
-          Welcome, Organizer
+        <h2 className="text-5xl font-extrabold mb-4 animate-bounce">
+          Explore Our Features
         </h2>
-        <p className="text-lg max-w-2xl mx-auto">
-          Manage your events, track sales, and engage with attendees all from
-          one place.
+        <p className="text-lg mb-10 max-w-3xl mx-auto">
+          Discover how EventVerse empowers attendees, organizers, and vendors to
+          create seamless event experiences. From planning to execution, we’ve
+          got you covered.
         </p>
       </header>
 
-      {/* Main Dashboard */}
-      <section className="px-5 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Card 1: Event Management */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Manage Events</h3>
-            <p>
-              View, edit, or delete events you've created. Keep track of event
-              schedules and details in one place.
-            </p>
-            <Link
-              to="/manage-events"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              Go to Events
-            </Link>
+      {/* Features Section */}
+      <section className="py-10 bg-white text-black rounded-t-3xl">
+        <div className="max-w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
+          {/* Feature 1: Attendee Module */}
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+            <h3 className="text-2xl font-bold mb-4 text-purple-600">
+              Attendee Module
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Secure user registration and login.</li>
+              <li>Search and book events with filters.</li>
+              <li>Download e-tickets with QR-code-based check-in.</li>
+              <li>Provide feedback and view past interactions.</li>
+            </ul>
           </div>
 
-          {/* Card 2: Ticket Sales */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Ticket Sales</h3>
-            <p>
-              Monitor ticket sales, track revenue, and ensure attendees can
-              access your events without issues.
-            </p>
-            <Link
-              to="/ticket-sales"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              View Sales
-            </Link>
+          {/* Feature 2: Organizer Module */}
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+            <h3 className="text-2xl font-bold mb-4 text-purple-600">
+              Organizer Module
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Create and manage events seamlessly.</li>
+              <li>Set ticket types, pricing, and availability.</li>
+              <li>Track attendee details and respond to queries.</li>
+              <li>Access real-time analytics and feedback.</li>
+            </ul>
           </div>
 
-          {/* Card 3: Analytics */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Event Analytics</h3>
-            <p>
-              Gain insights into event performance with real-time analytics and
-              feedback from attendees.
-            </p>
-            <Link
-              to="/analytics"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              View Analytics
-            </Link>
+          {/* Feature 3: Admin Module */}
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+            <h3 className="text-2xl font-bold mb-4 text-purple-600">
+              Admin Module
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Approve events and manage users.</li>
+              <li>Generate reports on event metrics and user activity.</li>
+              <li>Handle complaints and feedback moderation.</li>
+              <li>Monitor overall platform growth and analytics.</li>
+            </ul>
+          </div>
+
+          {/* Feature 4: Vendor Module */}
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+            <h3 className="text-2xl font-bold mb-4 text-purple-600">
+              Vendor Module
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Secure vendor registration and profile setup.</li>
+              <li>Bid for event contracts with transparency.</li>
+              <li>Track payment statuses for services.</li>
+              <li>Engage in sponsorships effectively.</li>
+            </ul>
+          </div>
+
+          {/* Feature 5: Payment Integration */}
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+            <h3 className="text-2xl font-bold mb-4 text-purple-600">
+              Payment Integration
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Secure and seamless ticket purchases.</li>
+              <li>Support for multiple payment gateways (Stripe, PayPal).</li>
+              <li>Transparent tracking of all transactions.</li>
+            </ul>
+          </div>
+
+          {/* Feature 6: Event Analytics */}
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+            <h3 className="text-2xl font-bold mb-4 text-purple-600">
+              Event Analytics
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Detailed reports on attendee feedback.</li>
+              <li>Real-time ticket sales tracking.</li>
+              <li>Insights into attendee engagement.</li>
+              <li>Data-driven recommendations for future events.</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -217,4 +250,4 @@ const OrganizerDashboard = () => {
   );
 };
 
-export default OrganizerDashboard;
+export default FeaturesPage;

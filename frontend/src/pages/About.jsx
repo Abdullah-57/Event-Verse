@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const OrganizerDashboard = () => {
+const About = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
       {/* Navbar */}
@@ -13,44 +14,44 @@ const OrganizerDashboard = () => {
           </h1>
           <div className="hidden md:flex gap-6 text-lg">
             <NavLink
-              to="/dashboard"
+              to="/"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Dashboard
+              Home
             </NavLink>
             <NavLink
-              to="/organizer/create-event"
+              to="/features"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Create Event
+              Features
             </NavLink>
             <NavLink
-              to="/profile"
+              to="/about"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Profile
+              About
             </NavLink>
             <NavLink
-              to="/logout"
+              to="/contact"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Logout
+              Contact
             </NavLink>
           </div>
           {/* Hamburger Menu */}
@@ -78,12 +79,11 @@ const OrganizerDashboard = () => {
             </svg>
           </button>
         </div>
-        {/* Dropdown Menu for Mobile */}
         {isMenuOpen && (
           <ul className="md:hidden bg-gray-700 text-white text-lg">
             <li className="border-b border-gray-600">
               <NavLink
-                to="/dashboard"
+                to="/"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -91,12 +91,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Dashboard
+                Home
               </NavLink>
             </li>
             <li className="border-b border-gray-600">
               <NavLink
-                to="/create-event"
+                to="/features"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -104,12 +104,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Create Event
+                Features
               </NavLink>
             </li>
             <li className="border-b border-gray-600">
               <NavLink
-                to="/profile"
+                to="/about"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -117,12 +117,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Profile
+                About
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/logout"
+                to="/contact"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -130,7 +130,7 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Logout
+                Contact
               </NavLink>
             </li>
           </ul>
@@ -140,64 +140,97 @@ const OrganizerDashboard = () => {
       {/* Header */}
       <header className="text-center py-20">
         <h2 className="text-5xl font-extrabold mb-6 animate-bounce">
-          Welcome, Organizer
+          About EventVerse
         </h2>
-        <p className="text-lg max-w-2xl mx-auto">
-          Manage your events, track sales, and engage with attendees all from
-          one place.
+        <p className="text-lg mb-10 max-w-3xl mx-auto">
+          EventVerse is an innovative platform revolutionizing the way events
+          are planned, organized, and experienced. Learn more about our mission,
+          vision, and the team behind this exceptional project.
         </p>
       </header>
 
-      {/* Main Dashboard */}
-      <section className="px-5 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Card 1: Event Management */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Manage Events</h3>
-            <p>
-              View, edit, or delete events you've created. Keep track of event
-              schedules and details in one place.
-            </p>
-            <Link
-              to="/manage-events"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              Go to Events
-            </Link>
-          </div>
-
-          {/* Card 2: Ticket Sales */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Ticket Sales</h3>
-            <p>
-              Monitor ticket sales, track revenue, and ensure attendees can
-              access your events without issues.
-            </p>
-            <Link
-              to="/ticket-sales"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              View Sales
-            </Link>
-          </div>
-
-          {/* Card 3: Analytics */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Event Analytics</h3>
-            <p>
-              Gain insights into event performance with real-time analytics and
-              feedback from attendees.
-            </p>
-            <Link
-              to="/analytics"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              View Analytics
-            </Link>
+      {/* About Us Section */}
+      <section className="py-16 bg-white text-black rounded-t-3xl w-full">
+        <div className="w-full px-6">
+          <h3 className="text-4xl font-bold text-center text-purple-600 mb-10">
+            Our Mission & Vision
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Mission */}
+            <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+              <h4 className="text-2xl font-bold mb-4">Our Mission</h4>
+              <p>
+                To empower event organizers, attendees, vendors, and sponsors
+                with a seamless and scalable platform that simplifies event
+                management. We aim to create memorable experiences and bring
+                people together effortlessly.
+              </p>
+            </div>
+            {/* Vision */}
+            <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
+              <h4 className="text-2xl font-bold mb-4">Our Vision</h4>
+              <p>
+                To become the world’s most trusted event management solution by
+                continuously innovating and delivering exceptional value to our
+                users.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* Meet the Team Section */}
+      <section className="py-16 bg-gray-900 text-white w-full">
+        <div className="w-full px-6">
+          <h3 className="text-4xl font-bold text-center mb-10">
+            Meet the Team
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Team Member 1 */}
+            <div className="bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300 text-center">
+              <img
+                src="../public/images/abdullah.png"
+                alt="Team Member"
+                className="rounded-full w-32 h-32 mx-auto mb-4"
+              />
+              <h4 className="text-2xl font-bold">Abdullah Daoud</h4>
+              <p className="text-yellow-300">Lead Developer</p>
+              <p className="mt-2">
+                Responsible for crafting seamless attendee experiences and
+                ensuring robust backend APIs.
+              </p>
+            </div>
+            {/* Team Member 2 */}
+            <div className="bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300 text-center">
+              <img
+                src="../public/images/rounded 1.jpeg"
+                alt="Team Member"
+                className="rounded-full w-32 h-32 mx-auto mb-4"
+              />
+              <h4 className="text-2xl font-bold">Usman Ali</h4>
+              <p className="text-yellow-300">Organizer Specialist</p>
+              <p className="mt-2">
+                Expert in building organizer modules, ticket management, and
+                event analytics tools.
+              </p>
+            </div>
+            {/* Team Member 3 */}
+            <div className="bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300 text-center">
+              <img
+                src="../public/images/faizan.png"
+                alt="Team Member"
+                className="rounded-full w-32 h-32 mx-auto mb-4"
+              />
+              <h4 className="text-2xl font-bold">Faizan Rasheed</h4>
+              <p className="text-yellow-300">Admin & Vendor Expert</p>
+              <p className="mt-2">
+                Focuses on creating vendor management systems and ensuring
+                smooth interactions between admins and vendors.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-10 text-center">
         <p>© 2024 EventVerse. All rights reserved.</p>
@@ -217,4 +250,4 @@ const OrganizerDashboard = () => {
   );
 };
 
-export default OrganizerDashboard;
+export default About;

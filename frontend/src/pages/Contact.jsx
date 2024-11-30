@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-
-const OrganizerDashboard = () => {
+import { NavLink } from "react-router-dom";
+const ContactPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
       {/* Navbar */}
@@ -13,44 +13,44 @@ const OrganizerDashboard = () => {
           </h1>
           <div className="hidden md:flex gap-6 text-lg">
             <NavLink
-              to="/dashboard"
+              to="/"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Dashboard
+              Home
             </NavLink>
             <NavLink
-              to="/organizer/create-event"
+              to="/features"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Create Event
+              Features
             </NavLink>
             <NavLink
-              to="/profile"
+              to="/about"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Profile
+              About
             </NavLink>
             <NavLink
-              to="/logout"
+              to="/contact"
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
                   : "hover:text-yellow-400 transition duration-300 text-white"
               }
             >
-              Logout
+              Contact
             </NavLink>
           </div>
           {/* Hamburger Menu */}
@@ -78,12 +78,11 @@ const OrganizerDashboard = () => {
             </svg>
           </button>
         </div>
-        {/* Dropdown Menu for Mobile */}
         {isMenuOpen && (
           <ul className="md:hidden bg-gray-700 text-white text-lg">
             <li className="border-b border-gray-600">
               <NavLink
-                to="/dashboard"
+                to="/"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -91,12 +90,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Dashboard
+                Home
               </NavLink>
             </li>
             <li className="border-b border-gray-600">
               <NavLink
-                to="/create-event"
+                to="/features"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -104,12 +103,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Create Event
+                Features
               </NavLink>
             </li>
             <li className="border-b border-gray-600">
               <NavLink
-                to="/profile"
+                to="/about"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -117,12 +116,12 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Profile
+                About
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/logout"
+                to="/contact"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-3 px-5 text-yellow-400 bg-gray-800"
@@ -130,74 +129,118 @@ const OrganizerDashboard = () => {
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Logout
+                Contact
               </NavLink>
             </li>
           </ul>
         )}
       </nav>
-
       {/* Header */}
-      <header className="text-center py-20">
-        <h2 className="text-5xl font-extrabold mb-6 animate-bounce">
-          Welcome, Organizer
+      <header className="text-center py-16">
+        <h2 className="text-5xl font-extrabold mb-4 animate-bounce">
+          Get in Touch
         </h2>
-        <p className="text-lg max-w-2xl mx-auto">
-          Manage your events, track sales, and engage with attendees all from
-          one place.
+        <p className="text-lg max-w-3xl mx-auto">
+          We’d love to hear from you! Whether you’re an attendee, organizer, or
+          vendor, our team is here to help you with any queries or support.
         </p>
       </header>
+      {/* Contact Form Section */}
+      <section className="py-10 bg-white text-black rounded-t-3xl">
+        <div className="max-w-4xl mx-auto p-6 shadow-lg rounded-lg bg-gray-100">
+          <h3 className="text-3xl font-bold text-center mb-8 text-purple-600">
+            Contact Us
+          </h3>
+          <form className="space-y-6">
+            {/* Name Input */}
+            <div>
+              <label className="block text-lg font-semibold mb-2">
+                Your Name
+              </label>
+              <input
+                type="text"
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="Enter your name"
+                required
+              />
+            </div>
 
-      {/* Main Dashboard */}
-      <section className="px-5 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Card 1: Event Management */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Manage Events</h3>
-            <p>
-              View, edit, or delete events you've created. Keep track of event
-              schedules and details in one place.
-            </p>
-            <Link
-              to="/manage-events"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              Go to Events
-            </Link>
-          </div>
+            {/* Email Input */}
+            <div>
+              <label className="block text-lg font-semibold mb-2">
+                Your Email
+              </label>
+              <input
+                type="email"
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
 
-          {/* Card 2: Ticket Sales */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Ticket Sales</h3>
-            <p>
-              Monitor ticket sales, track revenue, and ensure attendees can
-              access your events without issues.
-            </p>
-            <Link
-              to="/ticket-sales"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
-            >
-              View Sales
-            </Link>
-          </div>
+            {/* Subject Input */}
+            <div>
+              <label className="block text-lg font-semibold mb-2">
+                Subject
+              </label>
+              <input
+                type="text"
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="Enter subject"
+                required
+              />
+            </div>
 
-          {/* Card 3: Analytics */}
-          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Event Analytics</h3>
-            <p>
-              Gain insights into event performance with real-time analytics and
-              feedback from attendees.
-            </p>
-            <Link
-              to="/analytics"
-              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
+            {/* Message Input */}
+            <div>
+              <label className="block text-lg font-semibold mb-2">
+                Message
+              </label>
+              <textarea
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="Write your message here"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-full text-lg font-semibold shadow-lg transition duration-300"
             >
-              View Analytics
-            </Link>
-          </div>
+              Send Message
+            </button>
+          </form>
         </div>
       </section>
-
+      {/* Additional Info Section */}
+      <section className="py-10 text-center">
+        <h3 className="text-3xl font-bold mb-4">Our Contact Information</h3>
+        <p className="text-lg mb-6">
+          Feel free to reach us through the following channels:
+        </p>
+        <div className="space-y-4">
+          <p className="flex items-center justify-center gap-2">
+            <span className="font-bold">Email:</span>
+            <a
+              href="mailto:support@eventverse.com"
+              className="text-yellow-300 hover:text-yellow-400 transition"
+            >
+              support@eventverse.com
+            </a>
+          </p>
+          <p className="flex items-center justify-center gap-2">
+            <span className="font-bold">Phone:</span>
+            <a
+              href="tel:+1234567890"
+              className="text-yellow-300 hover:text-yellow-400 transition"
+            >
+              +1 234 567 890
+            </a>
+          </p>
+        </div>
+      </section>
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-10 text-center">
         <p>© 2024 EventVerse. All rights reserved.</p>
@@ -217,4 +260,4 @@ const OrganizerDashboard = () => {
   );
 };
 
-export default OrganizerDashboard;
+export default ContactPage;

@@ -1,28 +1,37 @@
-import React from 'react';
-import EventSearch from './components/EventSearch';
-import EventCreation from './components/EventCreation'; 
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import DashboardAttendee from './components/DashboardAttendee';
-import DashboardOrganizer from './components/DashboardOrganizer';
-import DashboardAdmin from './components/DashboardAdmin';
-import DashboardSponsor from './components/DashboardSponsor';
-import Preferences from './components/Preferences';
-import EventDashboard from './components/EventDashboard'; // Import the new component
+import React from "react";
+import EventSearch from "./components/EventSearch";
+import EventCreation from "./components/EventCreation";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import DashboardAttendee from "./components/DashboardAttendee";
+import DashboardOrganizer from "./components/DashboardOrganizer";
+import DashboardAdmin from "./components/DashboardAdmin";
+import DashboardSponsor from "./components/DashboardSponsor";
+import Preferences from "./components/Preferences";
+import EventDashboard from "./components/EventDashboard"; // Import the new component
+import Home from "./pages/Home";
+import Features from "./pages/Features";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import ManageEvents from "./components/ManageEvents";
 
+// const Home = () => {
+//   const navigate = useNavigate();
 
-const Home = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div>
-      <h1>Welcome to Event-Verse</h1>
-      <button onClick={() => navigate('/signup')}>Go to Signup</button>
-      <button onClick={() => navigate('/login')}>Go to Login</button>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <h1>Welcome to Event-Verse</h1>
+//       <button onClick={() => navigate("/signup")}>Go to Signup</button>
+//       <button onClick={() => navigate("/login")}>Go to Login</button>
+//     </div>
+//   );
+// };
 
 const App = () => {
   return (
@@ -30,13 +39,21 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/attendee" element={<DashboardAttendee />} />
           <Route path="/attendee/event-search" element={<EventSearch />} />
-          <Route path="/attendee/event-dashboard" element={<EventDashboard />} />;
+          <Route
+            path="/attendee/event-dashboard"
+            element={<EventDashboard />}
+          />
+          ;
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/dashboard/organizer" element={<DashboardOrganizer />} />
+          <Route path="/manage-events" element={<ManageEvents />} />
           <Route path="/organizer/create-event" element={<EventCreation />} />
           <Route path="/dashboard/admin" element={<DashboardAdmin />} />
           <Route path="/dashboard/sponsor" element={<DashboardSponsor />} />
