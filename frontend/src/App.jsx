@@ -21,18 +21,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ManageEvents from "./components/ManageEvents";
 
-// const Home = () => {
-//   const navigate = useNavigate();
-
-//   return (
-//     <div>
-//       <h1>Welcome to Event-Verse</h1>
-//       <button onClick={() => navigate("/signup")}>Go to Signup</button>
-//       <button onClick={() => navigate("/login")}>Go to Login</button>
-//     </div>
-//   );
-// };
-
 const App = () => {
   return (
     <div>

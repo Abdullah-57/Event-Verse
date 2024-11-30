@@ -42,7 +42,13 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen flex justify-center items-center">
+    <div
+      className=" min-h-screen flex justify-center items-center"
+      style={{
+        backgroundImage: `linear-gradient(to right, rgba(242, 98, 152, 0.3), rgba(242, 98, 152, 0.7)), url('./images/login_bc.png')`,
+        backgroundSize: "cover",
+      }}
+    >
       {/* Login Form */}
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
         <h2 className="text-3xl font-bold text-center text-purple-600 mb-8 animate__animated animate__fadeIn">

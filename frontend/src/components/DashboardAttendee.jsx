@@ -1,99 +1,221 @@
-import React, { useState, useEffect } from 'react';
-import EventSearch from './EventSearch';
-import EventDashboard from './EventDashboard';
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
-const DashboardAttendee = () => {
-   const [activeSection, setActiveSection] = useState('dashboard'); // Track the active section
-  const [showEventSearch, setShowEventSearch] = useState(false);
-  const [preferences, setPreferences] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const user = JSON.parse(localStorage.getItem('user')); // Get the user data from localStorage
-
-  // Fetch preferences from the backend
-  const fetchPreferences = async () => {
-    try {
-      // Replace 'http://localhost:5000/api/users/preferences' with your actual API URL if different
-      const response = await fetch(`http://localhost:5000/api/users/preferences?email=${user.email}`, {
-        method: 'GET',
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.preferences) {
-        setPreferences(data.preferences); // Set state with fetched preferences
-      } else {
-        setError('Preferences not found.');
-      }
-    } catch (error) {
-      console.error('Error fetching preferences:', error);
-      setError('An error occurred while fetching preferences.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch preferences when the component mounts
-  useEffect(() => {
-    fetchPreferences();
-  }, []);
-
-
-
-    // Render content based on the active section
-  const renderContent = () => {
-    switch (activeSection) {
-      case 'search':
-        return <EventSearch />;
-      case 'events':
-        return <EventDashboard />;
-      default:
-        return (
-          <>
-            {loading ? (
-              <p>Loading preferences...</p>
-            ) : error ? (
-              <p>{error}</p>
-            ) : (
-              <div>
-                <h3>Your Preferences</h3>
-                {preferences.length > 0 ? (
-                  <ul>
-                    {preferences.map((preference, index) => (
-                      <li key={index}>{preference}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>You have not set any preferences yet.</p>
-                )}
-              </div>
-            )}
-            <p>Dashboard content here...</p>
-          </>
-        );
-    }
-  };
+const AttendeeDashboard = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div>
-      <h2>Welcome, {user.name}</h2>
-      <p>You're logged in as an Attendee!</p>
-
-
-      <nav>
-        <button onClick={() => setActiveSection('dashboard')}>Dashboard</button>
-        <button onClick={() => setActiveSection('search')}>Search Events</button>
-        <button onClick={() => setActiveSection('events')}>Registered Events</button>
+    <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
+      {/* Navbar */}
+      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-10">
+        <div className="container mx-auto flex justify-between items-center p-5">
+          <h1 className="text-3xl font-bold text-white">
+            <NavLink to="/">EventVerse</NavLink>
+          </h1>
+          <div className="hidden md:flex gap-6 text-lg">
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              Dashboard
+            </NavLink>
+            <NavLink
+              to="/attendee/events"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              My Events
+            </NavLink>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              Profile
+            </NavLink>
+            <NavLink
+              to="/logout"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              Logout
+            </NavLink>
+          </div>
+          {/* Hamburger Menu */}
+          <button
+            className="block md:hidden focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <svg
+              className="w-6 h-6 text-yellow-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d={
+                  isMenuOpen
+                    ? "M6 18L18 6M6 6l12 12"
+                    : "M4 6h16M4 12h16M4 18h16"
+                }
+              />
+            </svg>
+          </button>
+        </div>
+        {/* Dropdown Menu for Mobile */}
+        {isMenuOpen && (
+          <ul className="md:hidden bg-gray-700 text-white text-lg">
+            <li className="border-b border-gray-600">
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dashboard
+              </NavLink>
+            </li>
+            <li className="border-b border-gray-600">
+              <NavLink
+                to="/attendee/events"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                My Events
+              </NavLink>
+            </li>
+            <li className="border-b border-gray-600">
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/logout"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Logout
+              </NavLink>
+            </li>
+          </ul>
+        )}
       </nav>
 
-      <div>{renderContent()}</div>
-    
+      {/* Header */}
+      <header className="text-center py-20">
+        <h2 className="text-5xl font-extrabold mb-6 animate-pulse">
+          Welcome, Attendee
+        </h2>
+        <p className="text-lg max-w-2xl mx-auto">
+          Explore events, book tickets, and track your favorite experiences in
+          one place.
+        </p>
+      </header>
+
+      {/* Main Dashboard */}
+      <section className="px-5 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Card 1: Explore Events */}
+          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            <h3 className="text-2xl font-bold mb-4">Explore Events</h3>
+            <p>
+              Discover events that match your interests. Filter by date, type,
+              and location.
+            </p>
+            <Link
+              to="/explore-events"
+              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
+            >
+              Browse Events
+            </Link>
+          </div>
+
+          {/* Card 2: My Tickets */}
+          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            <h3 className="text-2xl font-bold mb-4">My Tickets</h3>
+            <p>
+              Access your purchased tickets and get ready for your upcoming
+              events.
+            </p>
+            <Link
+              to="/my-tickets"
+              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
+            >
+              View Tickets
+            </Link>
+          </div>
+
+          {/* Card 3: Feedback */}
+          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            <h3 className="text-2xl font-bold mb-4">Provide Feedback</h3>
+            <p>
+              Share your experience and takings and help us improve future
+              events.
+            </p>
+            <Link
+              to="/feedback"
+              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
+            >
+              Give Feedback
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-10 text-center">
+        <p>© 2024 EventVerse. All rights reserved.</p>
+        <div className="flex justify-center gap-5 mt-4">
+          <a href="#" className="hover:text-yellow-400">
+            Facebook
+          </a>
+          <a href="#" className="hover:text-yellow-400">
+            Twitter
+          </a>
+          <a href="#" className="hover:text-yellow-400">
+            LinkedIn
+          </a>
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default DashboardAttendee;
+export default AttendeeDashboard;

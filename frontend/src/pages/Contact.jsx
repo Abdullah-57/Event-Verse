@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+
 const ContactPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
+    <div className="min-h-screen flex flex-col text-white">
       {/* Navbar */}
-      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-10">
+      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center p-5">
           <h1 className="text-3xl font-bold text-white">
             <NavLink to="/">EventVerse</NavLink>
@@ -135,20 +136,30 @@ const ContactPage = () => {
           </ul>
         )}
       </nav>
-      {/* Header */}
-      <header className="text-center py-16">
-        <h2 className="text-5xl font-extrabold mb-4 animate-bounce">
-          Get in Touch
-        </h2>
-        <p className="text-lg max-w-3xl mx-auto">
-          We’d love to hear from you! Whether you’re an attendee, organizer, or
-          vendor, our team is here to help you with any queries or support.
-        </p>
+
+      {/* Hero Section */}
+      <header
+        className="relative text-center py-40 bg-cover bg-center flex-grow"
+        style={{
+          backgroundImage: `linear-gradient(rgba(242, 98, 152, 0.2), rgba(242, 98, 152, 0.2)), url('./images/bc.png')`,
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+          <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 animate-bounce">
+            Get in <span className="text-yellow-400">Touch</span>
+          </h2>
+          <p className="text-lg sm:text-xl mb-8">
+            We’d love to hear from you! Whether you’re an attendee, organizer,
+            or vendor, our team is here to help you with any queries or support.
+          </p>
+        </div>
       </header>
+
       {/* Contact Form Section */}
-      <section className="py-10 bg-white text-black rounded-t-3xl">
-        <div className="max-w-4xl mx-auto p-6 shadow-lg rounded-lg bg-gray-100">
-          <h3 className="text-3xl font-bold text-center mb-8 text-purple-600">
+      <section className="py-10 bg-gradient-to-b from-gray-800 to-gray-700 text-white shadow-xl">
+        <div className="max-w-4xl mx-auto p-6 shadow-md rounded-lg bg-gray-600">
+          <h3 className="text-3xl font-bold text-center mb-8 text-yellow-300">
             Contact Us
           </h3>
           <form className="space-y-6">
@@ -159,7 +170,7 @@ const ContactPage = () => {
               </label>
               <input
                 type="text"
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 rounded-lg bg-gray-700 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 placeholder="Enter your name"
                 required
               />
@@ -172,7 +183,7 @@ const ContactPage = () => {
               </label>
               <input
                 type="email"
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 rounded-lg bg-gray-700 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 placeholder="Enter your email"
                 required
               />
@@ -185,7 +196,7 @@ const ContactPage = () => {
               </label>
               <input
                 type="text"
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 rounded-lg bg-gray-700 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 placeholder="Enter subject"
                 required
               />
@@ -197,7 +208,7 @@ const ContactPage = () => {
                 Message
               </label>
               <textarea
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 rounded-lg bg-gray-700 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 placeholder="Write your message here"
                 rows="5"
                 required
@@ -207,53 +218,27 @@ const ContactPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-full text-lg font-semibold shadow-lg transition duration-300"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-black py-3 rounded-full text-lg font-semibold shadow-lg transition-transform transform hover:scale-105"
             >
               Send Message
             </button>
           </form>
         </div>
       </section>
-      {/* Additional Info Section */}
-      <section className="py-10 text-center">
-        <h3 className="text-3xl font-bold mb-4">Our Contact Information</h3>
-        <p className="text-lg mb-6">
-          Feel free to reach us through the following channels:
-        </p>
-        <div className="space-y-4">
-          <p className="flex items-center justify-center gap-2">
-            <span className="font-bold">Email:</span>
-            <a
-              href="mailto:support@eventverse.com"
-              className="text-yellow-300 hover:text-yellow-400 transition"
-            >
-              support@eventverse.com
-            </a>
-          </p>
-          <p className="flex items-center justify-center gap-2">
-            <span className="font-bold">Phone:</span>
-            <a
-              href="tel:+1234567890"
-              className="text-yellow-300 hover:text-yellow-400 transition"
-            >
-              +1 234 567 890
-            </a>
-          </p>
-        </div>
-      </section>
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-10 text-center">
         <p>© 2024 EventVerse. All rights reserved.</p>
         <div className="flex justify-center gap-5 mt-4">
-          <a href="#" className="hover:text-yellow-400">
-            Facebook
-          </a>
-          <a href="#" className="hover:text-yellow-400">
-            Twitter
-          </a>
-          <a href="#" className="hover:text-yellow-400">
-            LinkedIn
-          </a>
+          {["Facebook", "Twitter", "LinkedIn"].map((platform) => (
+            <a
+              key={platform}
+              href="#"
+              className="hover:text-yellow-400 transition duration-300"
+            >
+              {platform}
+            </a>
+          ))}
         </div>
       </footer>
     </div>

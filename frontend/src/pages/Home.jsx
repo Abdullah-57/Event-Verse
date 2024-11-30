@@ -5,9 +5,9 @@ const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
+    <div className="min-h-screen flex flex-col text-white">
       {/* Navbar */}
-      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-10">
+      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center p-5">
           <h1 className="text-3xl font-bold text-white">
             <NavLink to="/">EventVerse</NavLink>
@@ -138,63 +138,43 @@ const Home = () => {
       </nav>
 
       {/* Hero Section */}
-      <header className="text-center py-20">
-        <h2 className="text-5xl font-extrabold mb-6 animate-bounce">
-          Welcome to EventVerse
-        </h2>
-        <p className="text-lg mb-10 max-w-3xl mx-auto">
-          Your one-stop solution for organizing and managing events
-          effortlessly. From booking to analytics, we have everything covered
-          for you.
-        </p>
-        <Link to="/login">
-          <button className="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-full text-xl font-semibold shadow-lg transition duration-300">
-            Get Started
-          </button>
-        </Link>
-      </header>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white text-black rounded-t-3xl">
-        <h2 className="text-center text-4xl font-bold mb-10">Our Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-10">
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 transition transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Attendee Management</h3>
-            <p>
-              Effortlessly register attendees, manage bookings, and track event
-              check-ins with our seamless interface.
-            </p>
-          </div>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 transition transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Organizer Tools</h3>
-            <p>
-              Create and manage events, sell tickets, and access insightful
-              analytics with just a few clicks.
-            </p>
-          </div>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 transition transform duration-300">
-            <h3 className="text-2xl font-bold mb-4">Vendor/Sponsor Module</h3>
-            <p>
-              Allow vendors and sponsors to engage in event contracts and track
-              payment transparently.
-            </p>
-          </div>
+      <header
+        className="relative text-center py-40 bg-cover bg-center flex-grow"
+        style={{
+          backgroundImage: `linear-gradient(rgba(242, 98, 152, 0.2), rgba(242, 98, 152, 0.2)), url('./images/bc.png')`,
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+          <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 animate-bounce">
+            Welcome to <span className="text-yellow-400">EventVerse</span>
+          </h2>
+          <p className="text-lg sm:text-xl mb-8">
+            Organize and manage events effortlessly. Explore tools for
+            attendees, organizers, and sponsors in one platform.
+          </p>
+          <Link to="/login">
+            <button className="bg-purple-600 hover:bg-purple-700 text-black py-3 px-6 rounded-full text-lg font-semibold shadow-lg transition-transform transform hover:scale-105">
+              Get Started
+            </button>
+          </Link>
         </div>
-      </section>
+      </header>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-10 text-center">
         <p>© 2024 EventVerse. All rights reserved.</p>
-        <div className="flex justify-center gap-5 mt-4">
-          <a href="#" className="hover:text-yellow-400">
-            Facebook
-          </a>
-          <a href="#" className="hover:text-yellow-400">
-            Twitter
-          </a>
-          <a href="#" className="hover:text-yellow-400">
-            LinkedIn
-          </a>
+        <div className="flex justify-center gap-6 mt-4">
+          {["Facebook", "Twitter", "LinkedIn"].map((platform, idx) => (
+            <a
+              key={idx}
+              href="#"
+              className="hover:text-yellow-400 transition"
+              aria-label={platform}
+            >
+              {platform}
+            </a>
+          ))}
         </div>
       </footer>
     </div>

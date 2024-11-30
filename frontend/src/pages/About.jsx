@@ -5,9 +5,9 @@ const About = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
+    <div className="min-h-screen flex flex-col text-white">
       {/* Navbar */}
-      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-10">
+      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center p-5">
           <h1 className="text-3xl font-bold text-white">
             <NavLink to="/">EventVerse</NavLink>
@@ -138,49 +138,28 @@ const About = () => {
       </nav>
 
       {/* Header */}
-      <header className="text-center py-20">
-        <h2 className="text-5xl font-extrabold mb-6 animate-bounce">
-          About EventVerse
-        </h2>
-        <p className="text-lg mb-10 max-w-3xl mx-auto">
-          EventVerse is an innovative platform revolutionizing the way events
-          are planned, organized, and experienced. Learn more about our mission,
-          vision, and the team behind this exceptional project.
-        </p>
+      <header
+        className="relative text-center py-40 bg-cover bg-center flex-grow"
+        style={{
+          backgroundImage: `linear-gradient(rgba(242, 98, 152, 0.2), rgba(242, 98, 152, 0.2)), url('./images/bc.png')`,
+          backgroundSize: "cover",
+        }}
+      >
+        {" "}
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+          <h2 className="text-5xl font-extrabold mb-6 animate-bounce">
+            About <span className="text-yellow-400">EventVerse</span>
+          </h2>
+          <p className="text-lg sm:text-xl mb-8">
+            EventVerse is an innovative platform revolutionizing the way events
+            are planned, organized, and experienced. Learn more about our
+            mission, vision, and the team behind this exceptional project.
+          </p>
+        </div>
       </header>
 
-      {/* About Us Section */}
-      <section className="py-16 bg-white text-black rounded-t-3xl w-full">
-        <div className="w-full px-6">
-          <h3 className="text-4xl font-bold text-center text-purple-600 mb-10">
-            Our Mission & Vision
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Mission */}
-            <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
-              <h4 className="text-2xl font-bold mb-4">Our Mission</h4>
-              <p>
-                To empower event organizers, attendees, vendors, and sponsors
-                with a seamless and scalable platform that simplifies event
-                management. We aim to create memorable experiences and bring
-                people together effortlessly.
-              </p>
-            </div>
-            {/* Vision */}
-            <div className="bg-gray-100 p-6 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition transform duration-300">
-              <h4 className="text-2xl font-bold mb-4">Our Vision</h4>
-              <p>
-                To become the world’s most trusted event management solution by
-                continuously innovating and delivering exceptional value to our
-                users.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Meet the Team Section */}
-      <section className="py-16 bg-gray-900 text-white w-full">
+      <section className="py-16 bg-gradient-to-b from-gray-800 to-gray-700 text-white w-full">
         <div className="w-full px-6">
           <h3 className="text-4xl font-bold text-center mb-10">
             Meet the Team
