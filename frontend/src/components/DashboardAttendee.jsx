@@ -160,7 +160,7 @@ const AttendeeDashboard = () => {
               and location.
             </p>
             <Link
-              to="/explore-events"
+              to="/browse-events"
               className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
             >
               Browse Events
