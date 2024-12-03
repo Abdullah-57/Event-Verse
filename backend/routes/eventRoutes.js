@@ -273,4 +273,36 @@ router.put("/end-event/:id", async (req, res) => {
   }
 });
 
+//route toedit event by specific organizer who created it
+router.put("/edit-event/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, date, location, type, availableTickets, amount } = req.body;
+  const { organizerId } = req.body;
+  try {
+    // Find the event
+    const event = await Event.findById(id);
+    if (!event) {
+      return res.status(404).json({ message: "Event not found." });
+    }
+    // Check if the organizer is the creator of the event
+    if (event.createdBy.toString() !== organizerId) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to edit this event." });
+    }
+    // Update the event
+    event.name = name;
+    event.date = date;
+    event.location = location;
+    event.type = type;
+    event.availableTickets = availableTickets;
+
+    await event.save();
+    res.status(200).json({ message: "Event updated successfully." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to update the event." });
+  }
+});
+
 export default router;

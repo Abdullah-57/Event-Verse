@@ -1,99 +1,220 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
-const DashboardOrganizer = () => {
-  const user = JSON.parse(localStorage.getItem("user")); // Get logged-in user data
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    // Fetch all events
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/events/all-events"
-        );
-        const data = await response.json();
-        console.log("Fetched Events:", data); // Debug fetched events
-        setEvents(data);
-      } catch (err) {
-        console.error("Failed to fetch events:", err);
-      }
-    };
-
-    fetchEvents();
-  }, []);
-
-  // End an event
-  const handleEndEvent = async (eventId) => {
-    try {
-      if (!user || !user._id) {
-        alert("User not logged in. Please log in again.");
-        return;
-      }
-
-      const response = await fetch(
-        `http://localhost:5000/api/events/end-event/${eventId}`, // Fix the endpoint URL
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ organizerId: user._id }), // Pass user._id as organizerId
-        }
-      );
-
-      const data = await response.json();
-      if (response.ok) {
-        alert(data.message);
-        // Update UI to mark the event as ended
-        setEvents((prevEvents) =>
-          prevEvents.map((event) =>
-            event._id === eventId ? { ...event, isEnded: true } : event
-          )
-        );
-      } else {
-        alert(data.message);
-      }
-    } catch (err) {
-      console.error("Failed to end event:", err);
-    }
-  };
-
+const OrganizerDashboard = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <div>
-      <h2>Welcome, {user.name}</h2>
-      <p>You're logged in as an Organizer!</p>
-      <div>
-        <h3>Organizer Tools</h3>
-        <ul>
-          <li>
-            <Link to="/organizer/create-event">Create a New Event</Link>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h3>All Events</h3>
-        {events.length > 0 ? (
-          <ul>
-            {events.map((event) => (
-              <li key={event._id}>
-                <strong>{event.name}</strong> -{" "}
-                {new Date(event.date).toLocaleDateString()} - {event.location}
-                <span> (Organizer: {event.createdBy})</span>
-                {event.isEnded ? (
-                  <span> (Ended)</span>
-                ) : event.createdBy === user._id ? ( // Check if event was created by logged-in user
-                  <button onClick={() => handleEndEvent(event._id)}>
-                    End Event
-                  </button>
-                ) : null}
-              </li>
-            ))}
+    <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen text-white">
+      {/* Navbar */}
+      <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-10">
+        <div className="container mx-auto flex justify-between items-center p-5">
+          <h1 className="text-3xl font-bold text-white">
+            <NavLink to="/">EventVerse</NavLink>
+          </h1>
+          <div className="hidden md:flex gap-6 text-lg">
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              Dashboard
+            </NavLink>
+            <NavLink
+              to="/organizer/create-event"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              Create Event
+            </NavLink>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              Profile
+            </NavLink>
+            <NavLink
+              to="/logout"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+                  : "hover:text-yellow-400 transition duration-300 text-white"
+              }
+            >
+              Logout
+            </NavLink>
+          </div>
+          {/* Hamburger Menu */}
+          <button
+            className="block md:hidden focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <svg
+              className="w-6 h-6 text-yellow-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d={
+                  isMenuOpen
+                    ? "M6 18L18 6M6 6l12 12"
+                    : "M4 6h16M4 12h16M4 18h16"
+                }
+              />
+            </svg>
+          </button>
+        </div>
+        {/* Dropdown Menu for Mobile */}
+        {isMenuOpen && (
+          <ul className="md:hidden bg-gray-700 text-white text-lg">
+            <li className="border-b border-gray-600">
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dashboard
+              </NavLink>
+            </li>
+            <li className="border-b border-gray-600">
+              <NavLink
+                to="/create-event"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Create Event
+              </NavLink>
+            </li>
+            <li className="border-b border-gray-600">
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/logout"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-3 px-5 text-yellow-400 bg-gray-800"
+                    : "block py-3 px-5 hover:bg-gray-600"
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Logout
+              </NavLink>
+            </li>
           </ul>
-        ) : (
-          <p>No events available.</p>
         )}
-      </div>
+      </nav>
+
+      {/* Header */}
+      <header className="text-center py-20">
+        <h2 className="text-5xl font-extrabold mb-6 animate-bounce">
+          Welcome, Organizer
+        </h2>
+        <p className="text-lg max-w-2xl mx-auto">
+          Manage your events, track sales, and engage with attendees all from
+          one place.
+        </p>
+      </header>
+
+      {/* Main Dashboard */}
+      <section className="px-5 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Card 1: Event Management */}
+          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            <h3 className="text-2xl font-bold mb-4">Manage Events</h3>
+            <p>
+              View, edit, or delete events you've created. Keep track of event
+              schedules and details in one place.
+            </p>
+            <Link
+              to="/manage-events"
+              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
+            >
+              Go to Events
+            </Link>
+          </div>
+
+          {/* Card 2: Ticket Sales */}
+          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            <h3 className="text-2xl font-bold mb-4">Ticket Sales</h3>
+            <p>
+              Monitor ticket sales, track revenue, and ensure attendees can
+              access your events without issues.
+            </p>
+            <Link
+              to="/ticket-sales"
+              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
+            >
+              View Sales
+            </Link>
+          </div>
+
+          {/* Card 3: Analytics */}
+          <div className="bg-gray-100 text-black p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            <h3 className="text-2xl font-bold mb-4">Event Analytics</h3>
+            <p>
+              Gain insights into event performance with real-time analytics and
+              feedback from attendees.
+            </p>
+            <Link
+              to="/analytics"
+              className="block mt-4 text-center bg-purple-600 text-white py-2 rounded-full hover:bg-purple-700 transition"
+            >
+              View Analytics
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-10 text-center">
+        <p>© 2024 EventVerse. All rights reserved.</p>
+        <div className="flex justify-center gap-5 mt-4">
+          <a href="#" className="hover:text-yellow-400">
+            Facebook
+          </a>
+          <a href="#" className="hover:text-yellow-400">
+            Twitter
+          </a>
+          <a href="#" className="hover:text-yellow-400">
+            LinkedIn
+          </a>
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default DashboardOrganizer;
+export default OrganizerDashboard;
